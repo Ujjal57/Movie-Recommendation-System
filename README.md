@@ -51,9 +51,9 @@ env\Scripts\activate      # On Windows
 pip install -r requirements.txt
 ```
 
-### 🔹 4. Download Datasets
+### 🔹 4. Run the notebook86c26b4f17.ipynb file
 
-Place `movies.csv` and `credits.csv` inside the `model/` directory.
+Place `movie_list.pkl` and `similarity.pkl` inside the `model/` directory.
 
 ### 🔹 5. Run the Application
 
@@ -108,6 +108,4 @@ TMDB_API_KEY = "your_tmdb_api_key_here"
 
 ---
 
-## 📜 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
