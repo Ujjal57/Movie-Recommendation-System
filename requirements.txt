@@ -1,0 +1,7 @@
+streamlit
+pandas
+requests
+pickle5
+ast
+urllib3
+datetime
