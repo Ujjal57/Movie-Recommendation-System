@@ -24,6 +24,7 @@ A machine learning-based movie recommendation system built with Python and Strea
 │── app.py                    # Main Streamlit application
 │── requirements.txt           # Python dependencies
 │── README.md                  # Project documentation
+|── notebook86c26b4f17.ipynb
 ```
 
 ---
