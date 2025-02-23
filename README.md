@@ -58,7 +58,7 @@ Place `movies.csv` and `credits.csv` inside the `model/` directory.
 ### 🔹 5. Run the Application
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 ---
