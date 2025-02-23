@@ -76,11 +76,10 @@ streamlit run app.py
 
 ## 🖼️ Screenshots
 
-| Home Screen | Movie Recommendations |
+| Search By Movie Name | Search By Movie Genre |
 |-------------|----------------------|
-| ![Home](https://via.placeholder.com/500x300?text=Home+Screen) | ![Recommendations](https://via.placeholder.com/500x300?text=Recommendations) |
+| ![Home Screen](Screenshot_1.png) | ![Recommendations](Screenshot_2.png) |
 
----
 
 ## 🔑 API Usage
 
