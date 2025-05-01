@@ -77,7 +77,7 @@ python -m streamlit run app.py
 
 ## 🖼️ Screenshots
 
-| Search By Movie Name | Search By Movie Genre |
+| Loading Page | Home Screen | Search Movie |
 |-------------|----------------------|
 | ![Loading](1.png) | ![Home Screen](2.png) | ![Recommendations](3.png) |
 
