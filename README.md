@@ -77,8 +77,7 @@ python -m streamlit run app.py
 
 ## 🖼️ Screenshots
 
-| Loading Page | Home Screen | Search Movie |
-|-------------|----------------------|
+
 | ![Loading](1.png) | ![Home Screen](2.png) | ![Recommendations](3.png) |
 
 
