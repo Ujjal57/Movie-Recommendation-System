@@ -21,6 +21,10 @@ A machine learning-based movie recommendation system built with Python and Strea
 │   ├── similarity.pkl        # Precomputed similarity matrix
 │   ├── movies.csv            # Movie dataset
 │   ├── credits.csv           # Movie credits dataset
+|── static/
+|   ├── styles.css            # CSS for frontend styling
+|── templates/
+|   ├── index.html            # HTML template for the homepage
 │── app.py                    # Main Streamlit application
 │── requirements.txt           # Python dependencies
 │── README.md                  # Project documentation
