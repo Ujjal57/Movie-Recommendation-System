@@ -1,7 +1,5 @@
-streamlit
-pandas
-requests
-pickle5
-ast
-urllib3
-datetime
+Flask==2.3.2
+pandas==2.1.4
+requests==2.31.0
+urllib3==2.1.0
+gunicorn==21.2.0
