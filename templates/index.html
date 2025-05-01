@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CineX</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div id="introOverlay">
+        <div class="intro-text">
+            <span>C</span><span>i</span><span>n</span><span>e</span><span> </span><span>X</span>
+        </div>
+    </div>
+
+    <h1>🎬 CineX</h1>
+    <h2>{{ greeting }}</h2>
+    <h3>Get movie recommendations!</h3>
+
+    <h3>Popular Movies</h3>
+    <div class="grid">
+        {% for movie in popular_movies %}
+        <div class="card">
+            <img src="{{ movie.poster }}" alt="Poster">
+            <h4>{{ movie.title }}</h4>
+        </div>
+        {% endfor %}
+    </div>
+
+    <label><input type="radio" name="searchType" value="name" checked> Search by Movie Name</label>
+    <label><input type="radio" name="searchType" value="genre"> Search by Genre</label>
+
+    <div style="display:inline-block; position:relative;">
+        <input type="text" id="movieInput" placeholder="Type movie name..." autocomplete="off">
+        <div id="autocompleteList" class="autocomplete-items"></div>
+    </div>
+
+    <select id="genreSelect" style="display:none;">
+        {% for genre in genres %}
+        <option>{{ genre }}</option>
+        {% endfor %}
+    </select>
+
+    <input type="range" id="numSlider" min="1" max="10" value="5">
+    <span id="numValue">5</span>
+
+    <button onclick="getRecommendations()">🎥 Show Recommendation</button>
+
+    <div id="loading"><div class="spinner"></div></div>
+    <div id="results"></div>
+
+    <script>
+        const searchTypeRadios = document.getElementsByName("searchType");
+        const genreSelect = document.getElementById("genreSelect");
+        const movieInput = document.getElementById("movieInput");
+        const numSlider = document.getElementById("numSlider");
+        const numValue = document.getElementById("numValue");
+        const resultsDiv = document.getElementById("results");
+        const autocompleteList = document.getElementById("autocompleteList");
+        const loadingDiv = document.getElementById("loading");
+
+        const movieTitles = {{ movies|tojson }};
+        numSlider.oninput = () => numValue.textContent = numSlider.value;
+
+        searchTypeRadios.forEach(radio => {
+            radio.onchange = () => {
+                movieInput.style.display = radio.value === "name" ? "inline-block" : "none";
+                genreSelect.style.display = radio.value === "genre" ? "inline-block" : "none";
+            };
+        });
+
+        function autocomplete(inp, arr) {
+            inp.addEventListener("input", function () {
+                const val = this.value;
+                autocompleteList.innerHTML = "";
+                if (!val) return;
+                arr.forEach(movie => {
+                    if (movie.toLowerCase().startsWith(val.toLowerCase())) {
+                        const item = document.createElement("div");
+                        item.innerHTML = "<strong>" + movie.substr(0, val.length) + "</strong>" + movie.substr(val.length);
+                        item.onclick = () => {
+                            inp.value = movie;
+                            autocompleteList.innerHTML = "";
+                        };
+                        autocompleteList.appendChild(item);
+                    }
+                });
+            });
+
+            document.addEventListener("click", function (e) {
+                if (e.target !== inp) autocompleteList.innerHTML = "";
+            });
+        }
+
+        autocomplete(movieInput, movieTitles);
+
+        async function getRecommendations() {
+            resultsDiv.innerHTML = "";
+            loadingDiv.style.display = "block";
+            const type = document.querySelector('input[name="searchType"]:checked').value;
+            const num = numSlider.value;
+
+            let endpoint, data;
+            if (type === "name") {
+                const movieName = movieInput.value.trim();
+                if (!movieName) {
+                    alert("Please enter a movie name.");
+                    loadingDiv.style.display = "none";
+                    return;
+                }
+                endpoint = "/recommend";
+                data = { movie: movieName, num };
+            } else {
+                endpoint = "/genre";
+                data = { genre: genreSelect.value, num };
+            }
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const movies = await response.json();
+                if (!movies || movies.length === 0) {
+                    resultsDiv.innerHTML = "<p style='color:red; font-weight:bold;'>❌ No recommendations found.</p>";
+                } else {
+                    let html = "<div class='grid'>";
+                    movies.forEach(m => {
+                        html += 
+                            `<div class="card">
+                                <img src="${m.poster}" alt="Poster">
+                                <h4>${m.title}</h4>
+                                ${m.trailer ? `<a href="${m.trailer}" target="_blank">🎬 Watch Trailer</a>` : ""}
+                            </div>`;
+                    });
+                    html += "</div>";
+                    resultsDiv.innerHTML = html;
+                }
+            } catch (err) {
+                console.error("Error fetching recommendations:", err);
+                resultsDiv.innerHTML = "<p style='color:red; font-weight:bold;'>⚠️ An error occurred while fetching recommendations.</p>";
+            } finally {
+                loadingDiv.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
