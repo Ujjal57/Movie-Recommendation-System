@@ -79,7 +79,7 @@ python -m streamlit run app.py
 
 | Search By Movie Name | Search By Movie Genre |
 |-------------|----------------------|
-| ![Home Screen](Screenshot_1.png) | ![Recommendations](Screenshot_2.png) |
+| ![Loading](1.png) | ![Home Screen](2.png) | ![Recommendations](3.png) |
 
 
 ## 🔑 API Usage
